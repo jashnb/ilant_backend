@@ -15,6 +15,17 @@ app.add_middleware(CORSMiddleware,
 
 @app.get("/api/search-books")
 async def search_books(query: str, page: int = 1, items_per_page: int = 10):
+    """
+    Search books based on query:
+
+    Args:
+        query (str): The search query
+        page (int): The page number for pagination (default is 1).
+        items_per_page (int): The number of items per page (default is 10).
+
+    Returns:
+        dict: A dictionary containing a list of books.
+    """
     google_books_api_url = "https://www.googleapis.com/books/v1/volumes"
 
     offset = (page - 1) * items_per_page
@@ -22,15 +33,11 @@ async def search_books(query: str, page: int = 1, items_per_page: int = 10):
     params = {"q": query, "startIndex": offset, "maxResults": items_per_page}
 
     async with httpx.AsyncClient() as client:
-        print("making API call")
         response = await client.get(google_books_api_url, params=params)
-        print(f"Api call done: {response}")
         response_data = response.json()
-        print(response_data)
+
         # Process the response and extract relevant book information
         books = []
-        print(response_data.get("totalItems"))
-        print(len(response_data.get("items", [])))
         for item in response_data.get("items", []):
             volume_info = item.get("volumeInfo", {})
             book = {
@@ -41,7 +48,6 @@ async def search_books(query: str, page: int = 1, items_per_page: int = 10):
                 "coverUrl": volume_info.get("imageLinks", {}).get("thumbnail"),
             }
             books.append(book)
-        print(len(books))
         return {"books": books}
 
 if __name__ == "__main__":

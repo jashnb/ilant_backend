@@ -35,3 +35,7 @@ The server will be running on [http://localhost:8000](http://localhost:8000)
 ### Access the endpoint
 
 Once the server is running, you can access the search endpoint by navigating to `http://127.0.0.1/8000/api/search-books/?query=python&page=1&itemsPerPage=10`
+
+## Endpoint documentation
+
+To test out the endpoint, or to verify the documentation of the API please visit [here](http://127.0.0.1:8000/docs)
