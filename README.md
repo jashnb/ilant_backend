@@ -27,7 +27,7 @@ git clone https://github.com/jashnb/ilant_backend.git
 ### Run the Fast API Application
 
 ```bash
-uvicorn main:app --reload
+uvicorn src.main:app --reload
 ```
 
 The server will be running on [http://localhost:8000](http://localhost:8000)
